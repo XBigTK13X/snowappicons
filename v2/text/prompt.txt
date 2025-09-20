@@ -1,0 +1,1 @@
+The resulting image should be a PNG with a completely transparent background. The font should be a simple not too formal font. There should be snow on each letter. There should be nothing in the background. The font should be solid black. The snow should be white.
