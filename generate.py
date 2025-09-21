@@ -92,7 +92,7 @@ for export in exports:
     width = export['width']
     height = export['height']
     for input in inputs:
-        export_dir = os.path.join('./export',input[0])
+        export_dir = os.path.join('./generated',input[0])
         os.makedirs(export_dir,exist_ok=True)
         export_path = os.path.join(export_dir,f"{export['name']}.jpg")
         create_composite(
