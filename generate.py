@@ -39,17 +39,20 @@ def create_composite(
 
     img_a = Image.open(image_a_path).convert("RGBA")
     img_b = Image.open(image_b_path).convert("RGBA")
-    img_c = Image.open(image_c_path).convert("RGBA")
+    if not 'appicon' in output_path:
+        img_c = Image.open(image_c_path).convert("RGBA")
 
     img_a = resize_keep_aspect(img_a, size_a)
     img_b = resize_keep_aspect(img_b, size_b)
-    img_c = resize_keep_aspect(img_c, size_c)
+    if not 'appicon' in output_path:
+        img_c = resize_keep_aspect(img_c, size_c)
 
     background.paste(img_a, pos_a, img_a)
     background.paste(img_b, pos_b, img_b)
-    background.paste(img_c, pos_c, img_c)
+    if not 'appicon' in output_path:
+        background.paste(img_c, pos_c, img_c)
 
-    background.save(output_path, "JPEG")
+    background.save(output_path, "PNG")
     print(f"Image saved at {output_path}")
 
 character_image = './v2/character/snowflake.png'
@@ -74,17 +77,26 @@ exports = [
     {
         'name': 'tvbanner',
         'width': 1200,
-        'height': 600
+        'height': 600,
+        'pos_a': (.05,.15),
+        'pos_b': (.05,.25),
+        'pos_c': (.35,0.1)
     },
     {
         'name': 'appicon',
         'width': 1000,
-        'height': 1000
+        'height': 1000,
+        'pos_a': (.33,.30),
+        'pos_b': (.33,.40),
+        'pos_c': (.25,.45)
     },
     {
         'name': 'splash',
         'width': 1000,
-        'height': 1000
+        'height': 1000,
+        'pos_a': (.33,.2),
+        'pos_b': (.33,.3),
+        'pos_c': (.2,.45)
     }
 ]
 
@@ -94,22 +106,22 @@ for export in exports:
     for input in inputs:
         export_dir = os.path.join('./generated',input[0])
         os.makedirs(export_dir,exist_ok=True)
-        export_path = os.path.join(export_dir,f"{export['name']}.jpg")
+        export_path = os.path.join(export_dir,f"{export['name']}.png")
         create_composite(
             background_size=(width, height),
             background_color=input[1],
 
             image_a_path='./v2/character/snowflake.png',
             size_a=(int(width*.33), None),
-            pos_a=(int(width*.33), int(height*.20)),
+            pos_a=(int(width*export['pos_a'][0]), int(height*export['pos_a'][1])),
 
             image_b_path=f"./v2/accent/{input[0]}.png",
             size_b=(int(width*.33), None),
-            pos_b=(int(width*.33), int(height*.30)),
+            pos_b=(int(width*export['pos_b'][0]), int(height*export['pos_b'][1])),
 
             image_c_path=f"./v2/text/{input[0]}.png",
-            size_c=(int(width*.75), None),
-            pos_c=(int(width*.15), int(height*.45)),
+            size_c=(int(width*.65), None),
+            pos_c=(int(width*export['pos_c'][0]), int(height*export['pos_c'][1])),
 
             output_path=export_path
         )
