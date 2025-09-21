@@ -26,22 +26,28 @@ def create_composite(
     background_color:Tuple[int,int,int],
     image_a_path:str,
     image_b_path:str,
+    image_c_path:str,
     size_a:Tuple[int,int],
     size_b:Tuple[int,int],
+    size_c:Tuple[int,int],
     pos_a:Tuple[int,int],
     pos_b:Tuple[int,int],
+    pos_c:Tuple[int,int],
     output_path:str
 ):
     background = Image.new("RGB", background_size, background_color)
 
     img_a = Image.open(image_a_path).convert("RGBA")
     img_b = Image.open(image_b_path).convert("RGBA")
+    img_c = Image.open(image_c_path).convert("RGBA")
 
     img_a = resize_keep_aspect(img_a, size_a)
     img_b = resize_keep_aspect(img_b, size_b)
+    img_c = resize_keep_aspect(img_c, size_c)
 
     background.paste(img_a, pos_a, img_a)
     background.paste(img_b, pos_b, img_b)
+    background.paste(img_c, pos_c, img_c)
 
     background.save(output_path, "JPEG")
     print(f"Image saved at {output_path}")
@@ -67,18 +73,18 @@ inputs = [
 exports = [
     {
         'name': 'tvbanner',
-        'width': 600,
-        'height': 300
+        'width': 1200,
+        'height': 600
     },
     {
         'name': 'appicon',
-        'width': 500,
-        'height': 500
+        'width': 1000,
+        'height': 1000
     },
     {
         'name': 'splash',
-        'width': 400,
-        'height': 400
+        'width': 1000,
+        'height': 1000
     }
 ]
 
@@ -92,11 +98,18 @@ for export in exports:
         create_composite(
             background_size=(width, height),
             background_color=input[1],
+
             image_a_path='./v2/character/snowflake.png',
-            size_a=(150, None),
-            pos_a=(50, 50),
-            image_b_path=f"./v2/text/chatgpt/{input[0]}.png",
-            size_b=(None, 150),
-            pos_b=(150, 150),
+            size_a=(int(width*.33), None),
+            pos_a=(int(width*.33), int(height*.20)),
+
+            image_b_path=f"./v2/accent/{input[0]}.png",
+            size_b=(int(width*.33), None),
+            pos_b=(int(width*.33), int(height*.30)),
+
+            image_c_path=f"./v2/text/{input[0]}.png",
+            size_c=(int(width*.75), None),
+            pos_c=(int(width*.15), int(height*.45)),
+
             output_path=export_path
         )
