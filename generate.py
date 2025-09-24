@@ -53,7 +53,6 @@ def create_composite(
         background.paste(img_c, pos_c, img_c)
 
     background.save(output_path, "PNG")
-    print(f"Image saved at {output_path}")
 
 character_image = './v2/character/snowflake.png'
 
@@ -75,48 +74,57 @@ inputs = [
 
 exports = [
     {
-        'name': 'tvbanner',
-        'width': 1200,
-        'height': 600,
-        'pos_a': (.05,.15),
-        'pos_b': (.05,.25),
-        'pos_c': (.35,0.1)
-    },
-    {
         'name': 'appicon',
         'width': 1000,
         'height': 1000,
-        'pos_a': (.33,.30),
-        'pos_b': (.33,.40),
-        'pos_c': (.25,.45)
+        'pos_a': (.20,.20),
+        'pos_b': (.40,.40),
+        'pos_c': (.25,.45),
+        'scale': 1
     },
     {
         'name': 'splash',
         'width': 1000,
         'height': 1000,
-        'pos_a': (.33,.2),
-        'pos_b': (.33,.3),
-        'pos_c': (.2,.45)
-    }
+        'pos_a': (.15,.25),
+        'pos_b': (.5,.25),
+        'pos_c': (.2,.55),
+        'scale': 1
+    },
+    {
+        'name': 'tvbanner',
+        'width': 1200,
+        'height': 600,
+        'pos_a': (.33,.15),
+        'pos_b': (.5,.15),
+        'pos_c': (.15,.25),
+        'scale': .5
+    },
 ]
 
+export_count = 1
+export_total = len(exports) * len(inputs)
 for export in exports:
     width = export['width']
     height = export['height']
-    for input in inputs:
+    scale = export['scale']
+    print(f"\nExporting {export['name']}")
+    for input in inputs:        
         export_dir = os.path.join('./generated',input[0])
         os.makedirs(export_dir,exist_ok=True)
         export_path = os.path.join(export_dir,f"{export['name']}.png")
+        print(f"\t({export_count}/{export_total}) {export_path}")
+        export_count += 1
         create_composite(
             background_size=(width, height),
             background_color=input[1],
 
             image_a_path='./v2/character/snowflake.png',
-            size_a=(int(width*.33), None),
+            size_a=(int(width*scale*.33), None),
             pos_a=(int(width*export['pos_a'][0]), int(height*export['pos_a'][1])),
 
             image_b_path=f"./v2/accent/{input[0]}.png",
-            size_b=(int(width*.33), None),
+            size_b=(int(width*scale*.33), None),
             pos_b=(int(width*export['pos_b'][0]), int(height*export['pos_b'][1])),
 
             image_c_path=f"./v2/text/{input[0]}.png",
