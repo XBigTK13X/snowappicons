@@ -40,7 +40,7 @@ inputs = [
     },
     {
         'name':'snowjam',
-        'background': (255, 255, 255)
+        'background': (219, 44, 44)
     },
     {
         'name':'snowcloud',
