@@ -13,6 +13,7 @@ for root,dirs,files in os.walk('./v2/text'):
 inputs = [
     {
         'name':'snowstream',
+        'flavor': 'orange',
         'background': (253, 111, 1),
         'accent': {
             'position': (0,.1)
@@ -25,10 +26,12 @@ inputs = [
     },
     {
         'name':'snowgroove',
+        'flavor': 'purple',
         'background': (172,3,244)
     },
     {
-        'name':'snowpage',
+        'name': 'snowpage',
+        'flavor': 'dark-blue',
         'background': (105, 127, 255),
         'accent': {
             'position': (0,.05)
@@ -36,18 +39,23 @@ inputs = [
     },
     {
         'name':'snowtome',
+        'flavor': 'green',
         'background': (255, 255, 255)
     },
     {
         'name':'snowjam',
+        'flavor': 'red',
         'background': (219, 44, 44)
     },
     {
         'name':'snowcloud',
-        'background': (255, 255, 255)
+        'previously': 'snowsave',
+        'flavor': 'magenta',
+        'background': (220, 60, 180)
     },
     {
         'name':'snowblue',
+        'flavor': 'light-blue',
         'background': (255, 255, 255)
     }
 ]
