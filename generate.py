@@ -40,7 +40,7 @@ inputs = [
     {
         'name':'snowtome',
         'flavor': 'green',
-        'background': (255, 255, 255)
+        'background': (44, 219, 114)
     },
     {
         'name':'snowjam',
